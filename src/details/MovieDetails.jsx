@@ -7,7 +7,7 @@ function MovieDetails() {
 
     useEffect(() => {
         fetchMovie();
-    }, []);
+    }, [id]);
 
     const fetchMovie = async () => {
         const mMovieCall = await fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=d49416cd8a2e65767b5ac717906e3f63');
