@@ -1,11 +1,19 @@
 import {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 function Search() {
+    const [searchText, setSearchText] = useState("");
     const [movies, setMovies] = useState([]);
+    const location = useLocation();
+
+    useEffect(() => {
+        setSearchText("");
+        setMovies([]);
+    }, [location]);
 
     const search = async (event) => {
         const searchString = event.target.value;
+        setSearchText(searchString);
         if(searchString.length >= 2) {
             const mMoviesCall = await fetch('https://api.themoviedb.org/3/search/movie?api_key=d49416cd8a2e65767b5ac717906e3f63&query=' + searchString);
             const mMovies = await mMoviesCall.json();
@@ -41,7 +49,7 @@ function Search() {
 
     return (
         <div style={styles.container}>
-            <input onChange={search} style={styles.searchInput}/>
+            <input onChange={search} value={searchText} style={styles.searchInput}/>
             <div style={styles.movieListContainer}>
                 {
                     renderedMovies
