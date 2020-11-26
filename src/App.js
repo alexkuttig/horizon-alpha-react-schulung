@@ -2,10 +2,12 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route, Link
+    Route,
+    Link
 } from "react-router-dom";
 import MovieList from './list/MovieList';
 import MovieDetails from './details/MovieDetails';
+import Search from './search/Search';
 
 export default function App() {
     return (
@@ -16,6 +18,7 @@ export default function App() {
                         MyMovieDB
                     </h1>
                     <Link to={'/'} style={styles.link}>Home</Link>
+                    <Search />
                 </div>
                 <Switch>
                     <Route path="/details/:id">
