@@ -1,5 +1,23 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link} from "react-router-dom";
+import styled from "styled-components";
+
+const OuterContainer = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 16px
+`
+
+const StyledLink = styled(Link)`
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: stretch;
+    padding: 16px;
+    border-bottom: 1px solid #eeeeee;
+`
 
 function Search() {
     const [movies, setMovies] = useState([]);
@@ -19,7 +37,7 @@ function Search() {
     if(movies.length > 0){
         movies.forEach((movie) => {
             renderedMovies.push(
-                <Link to={'/details/' + movie.id} style={styles.movieContainer} key={'movie' + movie.id}>
+                <StyledLink to={'/details/' + movie.id} style={styles.movieContainer} key={'movie' + movie.id}>
                     {
                         movie.poster_path ?
                             (
@@ -34,29 +52,25 @@ function Search() {
                         <p><b>{movie.title}</b></p>
                         <p>{movie.release_date}</p>
                     </div>
-                </Link>
+                </StyledLink>
             )
         })
     }
 
     return (
-        <div style={styles.container}>
+        <OuterContainer style={styles.container}>
             <input onChange={search} style={styles.searchInput}/>
             <div style={styles.movieListContainer}>
                 {
                     renderedMovies
                 }
             </div>
-        </div>
+        </OuterContainer>
     );
 }
 
 const styles = {
     container: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        padding: 16
     },
     searchInput: {
         width: 200,
@@ -72,15 +86,6 @@ const styles = {
         width: 212,
         zIndex: 10,
         backgroundColor: '#cccccc'
-    },
-    movieContainer: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'stretch',
-        padding: 16,
-        borderBottom: '1px solid #eeeeee',
     },
     moviePoster: {
         width: 50
