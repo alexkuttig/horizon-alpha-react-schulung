@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 
@@ -17,6 +17,32 @@ const StyledLink = styled(Link)`
     align-self: stretch;
     padding: 16px;
     border-bottom: 1px solid #eeeeee;
+`
+
+const MoviePoster = styled.img`
+    width: 50px;
+`
+
+const MovieInfoContainer = styled.div`
+    padding-left: 16px;
+`
+
+const MovieTitle = styled.p`
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+`
+
+const MovieListContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 59px;
+    right: 32px;
+    width: 212px;
+    z-index: 10;
+    background-color: #cccccc
 `
 
 function Search() {
@@ -41,17 +67,16 @@ function Search() {
                     {
                         movie.poster_path ?
                             (
-                                <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
+                                <MoviePoster src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
                             )
                             :
                             (
-                                <img src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
+                                <MoviePoster src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
                             )
                     }
-                    <div style={styles.movieInfo}>
-                        <p><b>{movie.title}</b></p>
-                        <p>{movie.release_date}</p>
-                    </div>
+                    <MovieInfoContainer>
+                        <MovieTitle>{movie.title}</MovieTitle>
+                    </MovieInfoContainer>
                 </StyledLink>
             )
         })
@@ -60,11 +85,11 @@ function Search() {
     return (
         <OuterContainer style={styles.container}>
             <input onChange={search} style={styles.searchInput}/>
-            <div style={styles.movieListContainer}>
+            <MovieListContainer>
                 {
                     renderedMovies
                 }
-            </div>
+            </MovieListContainer>
         </OuterContainer>
     );
 }
