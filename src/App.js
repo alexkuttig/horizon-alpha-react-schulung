@@ -2,9 +2,11 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
+import 'antd/dist/antd.css';
+import { PageHeader } from "antd";
+import { BackTop } from 'antd';
 import MovieList from './list/MovieList';
 import MovieDetails from './details/MovieDetails';
 import Search from './search/Search';
@@ -13,13 +15,12 @@ export default function App() {
     return (
         <Router>
             <div style={styles.outerContainer}>
-                <div style={styles.header}>
-                    <h1 style={styles.headerText}>
-                        MyMovieDB
-                    </h1>
-                    <Link to={'/'} style={styles.link}>Home</Link>
-                    <Search />
-                </div>
+                <PageHeader
+                    backIcon={false}
+                    title="MyMovieDB"
+                    subTitle="Made with ant.design"
+                    extra={<Search />}
+                />
                 <Switch>
                     <Route path="/details/:id">
                         <MovieDetails/>
@@ -31,6 +32,7 @@ export default function App() {
                 <div style={styles.footer}>
                     <p>Made with ❤️ by Alexander Kuttig</p>
                 </div>
+                <BackTop />
             </div>
         </Router>
     );

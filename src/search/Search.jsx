@@ -1,5 +1,8 @@
 import {useState, useEffect} from 'react';
 import {Link, useLocation} from "react-router-dom";
+import { Input, List, Typography } from 'antd';
+
+const { Paragraph } = Typography;
 
 function Search() {
     const [searchText, setSearchText] = useState("");
@@ -27,34 +30,43 @@ function Search() {
     if(movies.length > 0){
         movies.forEach((movie) => {
             renderedMovies.push(
-                <Link to={'/details/' + movie.id} style={styles.movieContainer} key={'movie' + movie.id}>
-                    {
-                        movie.poster_path ?
-                            (
-                                <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
-                            )
-                            :
-                            (
-                                <img src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
-                            )
-                    }
-                    <div style={styles.movieInfo}>
-                        <p><b>{movie.title}</b></p>
-                        <p>{movie.release_date}</p>
-                    </div>
-                </Link>
             )
         })
     }
 
     return (
         <div style={styles.container}>
-            <input onChange={search} value={searchText} style={styles.searchInput}/>
-            <div style={styles.movieListContainer}>
-                {
-                    renderedMovies
-                }
-            </div>
+            <Input onChange={search} value={searchText} style={styles.searchInput} placeholder="Suche Filme..."/>
+            {
+                movies.length > 0 ?
+                    (
+                        <div style={styles.movieListContainer}>
+                            <List
+                                bordered
+                                dataSource={movies}
+                                renderItem={movie => (
+                                    <Link to={'/details/' + movie.id} style={styles.movieContainer} key={'movie' + movie.id}>
+                                        {
+                                            movie.poster_path ?
+                                                (
+                                                    <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
+                                                )
+                                                :
+                                                (
+                                                    <img src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
+                                                )
+                                        }
+                                        <div style={styles.movieInfo}>
+                                            <Paragraph ellipsis><b>{movie.title}</b></Paragraph>
+                                            <p>{movie.release_date}</p>
+                                        </div>
+                                    </Link>
+                                )}
+                            />
+                        </div>
+                    ) :
+                    (<div></div>)
+            }
         </div>
     );
 }
@@ -67,19 +79,17 @@ const styles = {
         padding: 16
     },
     searchInput: {
-        width: 200,
-        border: '1px solid #cccccc',
-        padding: 5
+        width: 250,
     },
     movieListContainer: {
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
-        top: 59,
-        right: 32,
-        width: 212,
+        top: 68,
+        right: 40,
+        width: 250,
         zIndex: 10,
-        backgroundColor: '#cccccc'
+        backgroundColor: '#f8f8f8'
     },
     movieContainer: {
         flex: 1,

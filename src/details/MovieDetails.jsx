@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
+import {Image} from 'antd';
 
 function MovieDetails() {
     const [movie, setMovie] = useState();
@@ -32,11 +33,11 @@ function MovieDetails() {
                                 {
                                     movie.poster_path ?
                                         (
-                                            <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
+                                            <Image src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} width={250} />
                                         )
                                         :
                                         (
-                                            <img src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
+                                            <Image src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} width={250} />
                                         )
                                 }
                                 <div style={styles.movieInfo}>
@@ -78,9 +79,6 @@ const styles = {
         backgroundColor: '#f8f8f8',
         borderRadius: 8,
         marginBottom: 16
-    },
-    moviePoster: {
-        width: 300
     },
     movieInfo: {
         paddingLeft: 16,

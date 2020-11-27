@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
+import {Row, Col, Card } from 'antd';
+const { Meta } = Card;
 
 function MovieList() {
     const [movies, setMovies] = useState([]);
@@ -16,34 +18,41 @@ function MovieList() {
     }
 
     let renderedMovies = [];
-    if(movies.length > 0){
+    if (movies.length > 0) {
         movies.forEach((movie) => {
             renderedMovies.push(
-                <Link to={'/details/' + movie.id} style={styles.movieContainer} key={'movie' + movie.id}>
-                    {
-                        movie.poster_path ?
-                            (
-                                <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path} style={styles.moviePoster} />
-                            )
-                            :
-                            (
-                                <img src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'} style={styles.moviePoster} />
-                            )
-                    }
-                    <div style={styles.movieInfo}>
-                        <h2>{movie.title}</h2>
-                        <p>{movie.release_date}</p>
-                    </div>
-                </Link>
+                <Col xxl={3} xl={4} lg={6} md={8} sm={12} xs={24} key={'movie' + movie.id}>
+                    <Link to={'/details/' + movie.id}>
+                        <Card cover={
+                            movie.poster_path ?
+                                (
+                                    <img src={'https://image.tmdb.org/t/p/w500/' + movie.poster_path}
+                                         />
+                                )
+                                :
+                                (
+                                    <img
+                                        src={'https://rezerwacja.opera.szczecin.pl/msi/Themes/msidemo2/images/placeholder-kino.png'}
+                                        />
+                                )
+                        }>
+                            <Meta
+                            title={movie.title}
+                            description={movie.release_date} />
+                        </Card>
+                    </Link>
+                </Col>
             )
         })
     }
 
     return (
         <div style={styles.container}>
-            {
-                renderedMovies
-            }
+            <Row gutter={[16, 16]}>
+                {
+                    renderedMovies
+                }
+            </Row>
         </div>
     );
 }
